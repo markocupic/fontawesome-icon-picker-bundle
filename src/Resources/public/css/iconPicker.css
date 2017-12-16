@@ -1,0 +1,84 @@
+#ctrl_faIcon #iconBox {
+    padding: 3px;
+    border: 1px solid #aaaaaa;
+    height: auto;
+    max-height: 600px;
+    overflow: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+#ctrl_faIcon #iconBox .font-awesome-icon-item {
+    padding: 5px 15px;
+    background-color: #fff;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    text-align: center;
+    width: 65px;
+    height: 95px;
+}
+
+#ctrl_faIcon #iconBox .font-awesome-icon-item.filtered {
+    display: none;
+}
+
+#ctrl_faIcon #iconBox .font-awesome-icon-item .font-id-title {
+    font-size: x-small;
+    color: #333;
+    padding: 0 5px;
+    text-align: center;
+    height: 33px;
+}
+
+#ctrl_faIcon #iconBox > .checked {
+    background-color: #ebfdd7;
+}
+
+#ctrl_faIcon #iconBox > div > * {
+    text-align: center;
+}
+
+#ctrl_faIcon #iconBox [class*="fa-2x"] {
+    font-size: 30px !important
+}
+
+#ctrl_faIcon #iconBox > div > [class*="fa-"] {
+    color: #333;
+}
+
+#ctrl_faIcon #iconBox .faStyleBox {
+    display: flex;
+    margin-top: 10px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+#ctrl_faIcon #iconBox .font-awesome-icon-item .faStyleBox .faStyle {
+    background-color: lightgray;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 3px;
+    visibility: hidden;
+}
+
+#ctrl_faIcon #iconBox .font-awesome-icon-item .faStyleBox .faStyle {
+    background-color: lightgray;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 3px;
+    visibility: hidden;
+}
+
+#ctrl_faIcon #iconBox .font-awesome-icon-item.checked .faStyleBox .faStyle {
+    visibility: visible;
+}
+
+#ctrl_faIcon #iconBox .font-awesome-icon-item.checked .faStyleBox .faStyle.selectedStyle {
+    background-color: orangered;
+}
+
+
+
