@@ -27,7 +27,7 @@ class Plugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create('Markocupic\FontawesomeIconPickerBundle\MarkocupicFontawesomeIconPickerBundle')
-                ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle']),
+                ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle']), 
         ];
     }
 }
