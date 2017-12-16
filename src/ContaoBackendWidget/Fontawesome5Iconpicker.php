@@ -7,7 +7,7 @@
  * Time: 11:13
  */
 
-namespace Markocupic\ServiceLinkBundle\ContaoBackendWidget;
+namespace Markocupic\FontawesomeIconPickerBundle\ContaoBackendWidget;
 
 use Contao\Widget;
 use Contao\ContentModel;
@@ -163,7 +163,7 @@ class Fontawesome5Iconpicker extends Widget
     protected function getFaIds()
     {
 
-        $strFile = file_get_contents(TL_ROOT . '/vendor/markocupic/service-link-bundle/src/Resources/fontawesome/icons.yml');
+        $strFile = file_get_contents(TL_ROOT . '/vendor/markocupic/fontawesome-icon-picker-bundle/src/Resources/fontawesome/icons.yml');
 
         $arrYaml = Yaml::parse($strFile);
         foreach ($arrYaml as $faId => $arrItemProps)

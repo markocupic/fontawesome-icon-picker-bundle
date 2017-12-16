@@ -24,4 +24,4 @@ if (TL_MODE == 'BE')
 }
 
 
-$GLOBALS['BE_FFL']['fontawesome5Iconpicker'] = 'Markocupic\ServiceLinkBundle\ContaoBackendWidget\Fontawesome5Iconpicker';
+$GLOBALS['BE_FFL']['fontawesome5Iconpicker'] = 'Markocupic\FontawesomeIconPickerBundle\ContaoBackendWidget\Fontawesome5Iconpicker';
