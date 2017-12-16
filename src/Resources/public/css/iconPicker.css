@@ -1,4 +1,8 @@
-#ctrl_faIcon #iconBox {
+#ctrl_faFilter {
+    background-color: #a5daf8;
+}
+
+#iconBox {
     padding: 3px;
     border: 1px solid #aaaaaa;
     height: auto;
@@ -10,7 +14,7 @@
     justify-content: flex-start;
 }
 
-#ctrl_faIcon #iconBox .font-awesome-icon-item {
+#iconBox .font-awesome-icon-item {
     padding: 5px 15px;
     background-color: #fff;
     color: #fff;
@@ -21,11 +25,11 @@
     height: 95px;
 }
 
-#ctrl_faIcon #iconBox .font-awesome-icon-item.filtered {
+#iconBox .font-awesome-icon-item.filtered {
     display: none;
 }
 
-#ctrl_faIcon #iconBox .font-awesome-icon-item .font-id-title {
+#iconBox .font-awesome-icon-item .font-id-title {
     font-size: x-small;
     color: #333;
     padding: 0 5px;
@@ -33,30 +37,30 @@
     height: 33px;
 }
 
-#ctrl_faIcon #iconBox > .checked {
+#iconBox > .checked {
     background-color: #ebfdd7;
 }
 
-#ctrl_faIcon #iconBox > div > * {
+#iconBox > div > * {
     text-align: center;
 }
 
-#ctrl_faIcon #iconBox [class*="fa-2x"] {
+#iconBox [class*="fa-2x"] {
     font-size: 30px !important
 }
 
-#ctrl_faIcon #iconBox > div > [class*="fa-"] {
+#iconBox > div > [class*="fa-"] {
     color: #333;
 }
 
-#ctrl_faIcon #iconBox .faStyleBox {
+#iconBox .faStyleBox {
     display: flex;
     margin-top: 10px;
     align-items: flex-start;
     flex-wrap: wrap;
 }
 
-#ctrl_faIcon #iconBox .font-awesome-icon-item .faStyleBox .faStyle {
+#iconBox .font-awesome-icon-item .faStyleBox .faStyleButton {
     background-color: lightgray;
     cursor: pointer;
     padding: 5px;
@@ -64,19 +68,11 @@
     visibility: hidden;
 }
 
-#ctrl_faIcon #iconBox .font-awesome-icon-item .faStyleBox .faStyle {
-    background-color: lightgray;
-    cursor: pointer;
-    padding: 5px;
-    margin-right: 3px;
-    visibility: hidden;
-}
-
-#ctrl_faIcon #iconBox .font-awesome-icon-item.checked .faStyleBox .faStyle {
+#iconBox .font-awesome-icon-item.checked .faStyleBox .faStyleButton {
     visibility: visible;
 }
 
-#ctrl_faIcon #iconBox .font-awesome-icon-item.checked .faStyleBox .faStyle.selectedStyle {
+#iconBox .font-awesome-icon-item.checked .faStyleBox .faStyleButton.selectedStyle {
     background-color: orangered;
 }
 

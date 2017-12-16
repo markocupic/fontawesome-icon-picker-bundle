@@ -1,9 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Marko
- * Date: 10.12.2017
- * Time: 21:50
+ * Font Awesome 5 Icon Picker Contao Backend Widget
+ * Copyright (c) 2008-2017 Marko Cupic
+ * @package fontawesome-icon-picker-bundle
+ * @author Marko Cupic m.cupic@gmx.ch, 2017
+ * @link    https://sac-kurse.kletterkader.com
  */
 
 

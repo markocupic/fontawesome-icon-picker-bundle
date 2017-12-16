@@ -1,53 +1,70 @@
-window.addEvent('domready', function (event) {
-    if ($$('#ctrl_faIcon #iconBox .checked').length) {
-        // Scroll to selected icon
-        new Fx.Scroll(document.id('iconBox')).toElement($$('#ctrl_faIcon #iconBox .checked')[0]);
+/**
+ * Font Awesome 5 Icon Picker Contao Backend Widget
+ * Copyright (c) 2008-2017 Marko Cupic
+ * @package fontawesome-icon-picker-bundle
+ * @author Marko Cupic m.cupic@gmx.ch, 2017
+ * @link    https://sac-kurse.kletterkader.com
+ */
+
+
+window.addEvent('domready', function () {
+
+    var iconBox = document.id('iconBox');
+    var inputIcon = document.id('ctrl_faIcon');
+    var inputFilter = document.id('ctrl_faFilter');
+
+
+    // Scroll on domready to selected icon
+    if (iconBox.getElements('.font-awesome-icon-item.checked').length) {
+        new Fx.Scroll(iconBox).toElement(iconBox.getElements('.font-awesome-icon-item.checked')[0]);
     }
-    $$('#iconBox .font-awesome-icon-item').addEvent('click', function (event) {
-        $$('#ctrl_faIcon #iconBox .checked').removeClass('checked');
-        $$('#ctrl_faIcon #iconBox input').removeProperty('checked').set('checked', false);
+
+    // Event click on the icon
+    iconBox.getElements('.font-awesome-icon-item').addEvent('click', function () {
+        // Remove and readd class 'checked'
+        iconBox.getElements('.font-awesome-icon-item.checked').removeClass('checked');
+        this.addClass('checked');
 
         // Set value
-        var faStyle = this.getElements('.faStyle')[0].getProperty('data-fa-style');
-        var faId = this.getProperty('data-faClass');
-        $$('input[name="faIcon"]').setProperty('value', faId + '||' + faStyle);
+        var faStyle = this.getElements('.faStyleButton')[0].getProperty('data-fastyle');
+        var faId = this.getElements('.faStyleButton')[0].getProperty('data-faid');
+        inputIcon.setProperty('value', faId + '||' + faStyle);
 
-        this.addClass('checked');
         // Style button handling
-        $$('#ctrl_faIcon #iconBox .faStyle.selectedStyle').removeClass('selectedStyle');
-        this.getElements('.faStyle')[0].addClass('selectedStyle');
+        iconBox.getElements('.faStyleButton.selectedStyle').removeClass('selectedStyle');
+        this.getElements('.faStyleButton')[0].addClass('selectedStyle');
     });
 
     // Add event to filter input
-    $$('input#faClassFilter').addEvent('input', function (event) {
+    inputFilter.addEvent('input', function () {
         var strFilter = this.getProperty('value').trim(' ');
-        var itemCollection = $$('.font-awesome-icon-item');
-        itemCollection.each(function (el) {
-            el.removeClass('filtered');
-            if (strFilter != '') {
-                if (el.getProperty('data-faClass').contains(strFilter) === false) {
-                    el.addClass('filtered');
+        iconBox.getElements('.faStyleButton').each(function (el) {
+            el.getParents('.font-awesome-icon-item').removeClass('filtered');
+            if (strFilter !== '') {
+                if (el.getProperty('data-faid').contains(strFilter) === false) {
+                    el.getParents('.font-awesome-icon-item').addClass('filtered');
                 }
             } else {
-                if ($$('#ctrl_faIcon #iconBox .checked').length) {
+                if (iconBox.getElements('.checked').length) {
                     // Scroll to selected icon
-                    new Fx.Scroll(document.id('iconBox')).toElement($$('#ctrl_faIcon #iconBox .checked')[0]);
+                    new Fx.Scroll(iconBox).toElement(iconBox.getElements('.font-awesome-icon-item.checked')[0]);
                 }
             }
         });
     });
 
-    // Style buttons
-    $$('#iconBox .font-awesome-icon-item .faStyle').addEvent('click', function (e) {
+    // Event click on style buttons
+    iconBox.getElements('.font-awesome-icon-item .faStyleButton').addEvent('click', function (e) {
 
         e.preventDefault();
         e.stopPropagation();
-        $$('#iconBox .font-awesome-icon-item .faStyle').removeClass('selectedStyle');
+        // Remove and readd class
+        iconBox.getElements('.font-awesome-icon-item .faStyleButton').removeClass('selectedStyle');
         this.addClass('selectedStyle');
 
         // Set value
-        var faStyle = this.getProperty('data-fa-style');
-        var faId = this.getParents('.font-awesome-icon-item')[0].getProperty('data-faClass');
-        $$('input[name="faIcon"]').setProperty('value', faId + '||' + faStyle);
+        var faStyle = this.getProperty('data-fastyle');
+        var faId = this.getProperty('data-faid');
+        inputIcon.setProperty('value', faId + '||' + faStyle);
     });
 });

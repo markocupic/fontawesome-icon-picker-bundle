@@ -1,1 +1,1 @@
-# Fontawesome 5 Icon Picker Bundle
+# Font Awesome 5 Icon Picker Contao Backend Widget

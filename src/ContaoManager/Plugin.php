@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright  Marko Cupic 2017 <m.cupic@gmx.ch>
- * @author     Marko Cupic
- * @package    GalleryCreatrBundle
- * @license    LGPL-3.0+
- * @see	       https://github.com/markocupic/gallery-creator-bundle
- *
+ * Font Awesome 5 Icon Picker Contao Backend Widget
+ * Copyright (c) 2008-2017 Marko Cupic
+ * @package fontawesome-icon-picker-bundle
+ * @author Marko Cupic m.cupic@gmx.ch, 2017
+ * @link    https://sac-kurse.kletterkader.com
  */
+
 namespace Markocupic\FontawesomeIconPickerBundle\ContaoManager;
 
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
@@ -27,7 +27,7 @@ class Plugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create('Markocupic\FontawesomeIconPickerBundle\MarkocupicFontawesomeIconPickerBundle')
-                ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle']), 
+                ->setLoadAfter(['Contao\CoreBundle\ContaoCoreBundle']),
         ];
     }
 }

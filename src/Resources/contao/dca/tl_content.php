@@ -1,12 +1,10 @@
 <?php
 /**
- * Contao Open Source CMS
- *
- * Copyright (C) 2005-2012 Leo Feyer
- *
- * @package Gallery Creator
- * @link    http://www.contao.org
- * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
+ * Font Awesome 5 Icon Picker Contao Backend Widget
+ * Copyright (c) 2008-2017 Marko Cupic
+ * @package fontawesome-icon-picker-bundle
+ * @author Marko Cupic m.cupic@gmx.ch, 2017
+ * @link    https://sac-kurse.kletterkader.com
  */
 
 

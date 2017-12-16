@@ -1,10 +1,11 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Marko
- * Date: 16.12.2017
- * Time: 11:13
+ * Font Awesome 5 Icon Picker Contao Backend Widget
+ * Copyright (c) 2008-2017 Marko Cupic
+ * @package fontawesome-icon-picker-bundle
+ * @author Marko Cupic m.cupic@gmx.ch, 2017
+ * @link    https://sac-kurse.kletterkader.com
  */
 
 namespace Markocupic\FontawesomeIconPickerBundle\ContaoBackendWidget;
@@ -36,8 +37,7 @@ class Fontawesome5Iconpicker extends Widget
     protected function validator($varInput)
     {
         $varInput = explode('||', $varInput);
-        return serialize($varInput);
-
+        $varInput =  serialize($varInput);
         return parent::validator($varInput);
     }
 
@@ -49,31 +49,22 @@ class Fontawesome5Iconpicker extends Widget
         return $this->generatePicker();
     }
 
-
+    /**
+     * @return string
+     */
     protected function generatePicker()
     {
         $ContentModel = ContentModel::findByPk(Input::get('id'));
-        if ($ContentModel !== null)
-        {
-            if (Input::post('FORM_SUBMIT'))
-            {
-                if (Input::post('faIcon') != '')
-                {
-                    //$ContentModel->faIcon = serialize(Input::post('faIcon'));
-                    //$ContentModel->save();
-                }
-            }
-        }
+
         // Load Font Awesome
         $arrFaIds = $this->getFaIds();
-        $html = '<fieldset id="ctrl_faIcon" class="tl_radio_container">';
+
         // Filter
-        $html .= '<h3><label>' . $GLOBALS['TL_LANG']['tl_content']['faIconFilter'] . '</label></h3>';
-        $html .= '<input type="text" id="faClassFilter" class="tl_text fa-class-filter" placeholder="filter">';
+        $html = sprintf('<h3><label>%s</label></h3>', $GLOBALS['TL_LANG']['tl_content']['faIconFilter']);
+        $html .= '<input type="text" id="ctrl_faFilter" class="tl_text" placeholder="filter"><br><br>';
 
 
         // Build radio-button-list
-        $html .= '<h3><label>Icon picker</label></h3>';
         $html .= '<div id="iconBox">';
 
         $inputValue = '';
@@ -88,23 +79,19 @@ class Fontawesome5Iconpicker extends Widget
         }
 
 
-        $html .= '<input type="hidden" name="faIcon" value="' . $inputValue . '">';
-        $i = 0;
+        $html .= sprintf('<input type="hidden" id="ctrl_faIcon" name="faIcon" value="%s">', $inputValue);
         foreach ($arrFaIds as $arrFa)
         {
-            $checked = '';
             $cssClassChecked = '';
-            $cssClassCheckedWithAttribute = '';
-            if ($currentFaId === 'fa-' . $arrFa['id'])
+            $faId = $arrFa['id'];
+            if ($currentFaId === $faId)
             {
-                $checked = ' checked="checked"';
                 $cssClassChecked = ' checked';
-                $cssClassCheckedWithAttribute = ' class="checked"';
             }
 
-            $html .= sprintf('<div onclick="" title="%s" class="font-awesome-icon-item%s" data-faClass="fa-%s">', $arrFa['id'], $cssClassChecked, $arrFa['id']);
-            $html .= '<div class="font-id-title">' . $arrFa['id'] . '</div>';
-            $html .= '<i class="fa fa-2x fa-fw ' . $arrFa['faStyle'] . ' ' . $arrFa['faClass'] . '"></i>';
+            $html .= sprintf('<div onclick="" title="%s" class="font-awesome-icon-item%s">', $faId, $cssClassChecked);
+            $html .= sprintf('<div class="font-id-title">%s</div>', $faId);
+            $html .= sprintf('<i class="fa fa-2x fa-fw %s fa-%s"></i>', $arrFa['faStyle'], $faId);
 
             $html .= '<div class="faStyleBox">';
             foreach ($arrFa['availableStyles'] as $style)
@@ -117,7 +104,7 @@ class Fontawesome5Iconpicker extends Widget
                     {
                         $selectedStyle = ' selectedStyle';
                     }
-                    $html .= sprintf('<div class="faStyle faStyleLight%s" role="button" title="light" data-fa-style="fal">L</div>', $selectedStyle);
+                    $html .= sprintf('<div class="faStyleButton%s" role="button" title="light" data-fastyle="fal" data-faid="%s">L</div>', $selectedStyle, $faId);
                 }
                 if ($style === 'solid')
                 {
@@ -125,7 +112,7 @@ class Fontawesome5Iconpicker extends Widget
                     {
                         $selectedStyle = ' selectedStyle';
                     }
-                    $html .= sprintf('<div class="faStyle faStyleSolid%s" role="button" title="solid" data-fa-style="fas">S</div>', $selectedStyle);
+                    $html .= sprintf('<div class="faStyleButton%s" role="button" title="solid" data-fastyle="fas" data-faid="%s">S</div>', $selectedStyle, $faId);
                 }
                 if ($style === 'brands')
                 {
@@ -133,22 +120,15 @@ class Fontawesome5Iconpicker extends Widget
                     {
                         $selectedStyle = ' selectedStyle';
                     }
-                    $html .= sprintf('<div class="faStyle faStyleBrand%s" role="button" title="brands" data-fa-style="fab">B</div>', $selectedStyle);
+                    $html .= sprintf('<div class="faStyleButton%s" role="button" title="brands" data-fastyle="fab" data-faid="%s">B</div>', $selectedStyle, $faId);
                 }
             }
             $html .= '</div>';
             $html .= '</div>';
 
-            $i++;
         }
 
-
         $html .= '</div>';
-        $html .= '</fieldset>';
-
-
-        // Javascript (Mootools)
-
 
         return $html;
 
@@ -157,12 +137,12 @@ class Fontawesome5Iconpicker extends Widget
     /**
      * Get all FontAwesomeClasses as array from icons.yml
      * Download this file at:
-     * https://raw.githubusercontent.com/FortAwesome/Font-Awesome/v4.7.0/src/3.2.1/icons.yml
+     * https://fontawesome.com/get-started
      * @return array
      */
     protected function getFaIds()
     {
-
+        $arrMatches = [];
         $strFile = file_get_contents(TL_ROOT . '/vendor/markocupic/fontawesome-icon-picker-bundle/src/Resources/fontawesome/icons.yml');
 
         $arrYaml = Yaml::parse($strFile);
