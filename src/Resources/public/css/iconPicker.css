@@ -21,7 +21,7 @@
     cursor: pointer;
     border: 1px solid #ccc;
     text-align: center;
-    width: 65px;
+    width: 64px;
     height: 95px;
 }
 
@@ -66,6 +66,7 @@
     padding: 5px;
     margin-right: 3px;
     visibility: hidden;
+    width: 8px;
 }
 
 #iconBox .font-awesome-icon-item.checked .faStyleBox .faStyleButton {

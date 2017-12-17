@@ -37,7 +37,7 @@ class Fontawesome5Iconpicker extends Widget
     protected function validator($varInput)
     {
         $varInput = explode('||', $varInput);
-        $varInput =  serialize($varInput);
+        $varInput = serialize($varInput);
         return parent::validator($varInput);
     }
 
@@ -68,14 +68,14 @@ class Fontawesome5Iconpicker extends Widget
         $html .= '<div id="iconBox">';
 
         $inputValue = '';
-        $currentFaId = null;
-        $currentFaStyle = null;
-        if (count(StringUtil::deserialize($ContentModel->faIcon, true)) == 2)
+        $currIconName = null;
+        $currIconPrefix = null;
+        if (count(StringUtil::deserialize($ContentModel->faIcon, true)) > 0)
         {
             $inputValue = implode('||', StringUtil::deserialize($ContentModel->faIcon, true));
             $arrFa = StringUtil::deserialize($ContentModel->faIcon, true);
-            $currentFaId = $arrFa[0];
-            $currentFaStyle = $arrFa[1];
+            $currIconName = $arrFa[0];
+            $currIconPrefix = $arrFa[1];
         }
 
 
@@ -83,46 +83,61 @@ class Fontawesome5Iconpicker extends Widget
         foreach ($arrFaIds as $arrFa)
         {
             $cssClassChecked = '';
-            $faId = $arrFa['id'];
-            if ($currentFaId === $faId)
+            $iconName = $arrFa['id'];
+            $iconLabel = $arrFa['label'];
+            $iconUnicode = $arrFa['unicode'];
+
+            if ($currIconName === $iconName)
             {
                 $cssClassChecked = ' checked';
             }
 
-            $html .= sprintf('<div onclick="" title="%s" class="font-awesome-icon-item%s">', $faId, $cssClassChecked);
-            $html .= sprintf('<div class="font-id-title">%s</div>', $faId);
-            $html .= sprintf('<i class="fa fa-2x fa-fw %s fa-%s"></i>', $arrFa['faStyle'], $faId);
+            $html .= sprintf('<div onclick="" title="%s" class="font-awesome-icon-item%s">', $iconName, $cssClassChecked);
+            $html .= sprintf('<div class="font-id-title">%s</div>', $iconName);
+            $html .= sprintf('<i class="fa fa-2x fa-fw %s fa-%s"></i>', $arrFa['faStyle'], $iconName);
 
             $html .= '<div class="faStyleBox">';
-            foreach ($arrFa['availableStyles'] as $style)
-            {
-                $selectedStyle = '';
 
-                if ($style === 'light')
+            $selectedStyle = '';
+            if (in_array('light', $arrFa['styles']))
+            {
+                if ($currIconPrefix === 'fal')
                 {
-                    if ($currentFaStyle === 'fal')
-                    {
-                        $selectedStyle = ' selectedStyle';
-                    }
-                    $html .= sprintf('<div class="faStyleButton%s" role="button" title="light" data-fastyle="fal" data-faid="%s">L</div>', $selectedStyle, $faId);
+                    $selectedStyle = ' selectedStyle';
                 }
-                if ($style === 'solid')
-                {
-                    if ($currentFaStyle === 'fas')
-                    {
-                        $selectedStyle = ' selectedStyle';
-                    }
-                    $html .= sprintf('<div class="faStyleButton%s" role="button" title="solid" data-fastyle="fas" data-faid="%s">S</div>', $selectedStyle, $faId);
-                }
-                if ($style === 'brands')
-                {
-                    if ($currentFaStyle === 'fab')
-                    {
-                        $selectedStyle = ' selectedStyle';
-                    }
-                    $html .= sprintf('<div class="faStyleButton%s" role="button" title="brands" data-fastyle="fab" data-faid="%s">B</div>', $selectedStyle, $faId);
-                }
+                $html .= sprintf('<div class="faStyleButton%s" role="button" title="light" data-falabel="%s" data-faiconunicode="%s" data-faiconprefix="fal" data-faiconname="%s">L</div>', $selectedStyle, $iconLabel, $iconUnicode, $iconName);
             }
+
+            $selectedStyle = '';
+            if (in_array('regular', $arrFa['styles']))
+            {
+                if ($currIconPrefix === 'far')
+                {
+                    $selectedStyle = ' selectedStyle';
+                }
+                $html .= sprintf('<div class="faStyleButton%s" role="button" title="regular" data-falabel="%s" data-faiconunicode="%s" data-faiconprefix="far" data-faiconname="%s">R</div>', $selectedStyle, $iconLabel, $iconUnicode, $iconName);
+            }
+
+            $selectedStyle = '';
+            if (in_array('solid', $arrFa['styles']))
+            {
+                if ($currIconPrefix === 'fas')
+                {
+                    $selectedStyle = ' selectedStyle';
+                }
+                $html .= sprintf('<div class="faStyleButton%s" role="button" title="solid" data-falabel="%s" data-faiconunicode="%s" data-faiconprefix="fas" data-faiconname="%s">S</div>', $selectedStyle, $iconLabel, $iconUnicode, $iconName);
+            }
+
+            $selectedStyle = '';
+            if (in_array('brands', $arrFa['styles']))
+            {
+                if ($currIconPrefix === 'fab')
+                {
+                    $selectedStyle = ' selectedStyle';
+                }
+                $html .= sprintf('<div class="faStyleButton%s" role="button" title="brands" data-falabel="%s" data-faiconunicode="%s" data-faiconprefix="fab" data-faiconname="%s">B</div>', $selectedStyle, $iconLabel, $iconUnicode, $iconName);
+            }
+
             $html .= '</div>';
             $html .= '</div>';
 
@@ -146,22 +161,21 @@ class Fontawesome5Iconpicker extends Widget
         $strFile = file_get_contents(TL_ROOT . '/vendor/markocupic/fontawesome-icon-picker-bundle/src/Resources/fontawesome/icons.yml');
 
         $arrYaml = Yaml::parse($strFile);
-        foreach ($arrYaml as $faId => $arrItemProps)
+        foreach ($arrYaml as $iconName => $arrItemProps)
         {
             $arrItem = array(
-                'id' => $faId,
-                'style' => 'solid',
-                'faStyle' => 'fas',
-                'faClass' => 'fa-' . $faId,
-                'availableStyles' => $arrItemProps['styles']
-
+                'id' => $iconName,
+                'faClass' => 'fa-' . $iconName,
+                'styles' => $arrItemProps['styles'],
+                'label' => $arrItemProps['label'],
+                'unicode' => $arrItemProps['unicode']
             );
 
             if (is_array($arrItemProps['styles']))
             {
                 if (in_array('regular', $arrItemProps['styles']))
                 {
-                    $arrItem['style'] = 'regular';
+                    $arrItem['style'] = 'solid';
                     $arrItem['faStyle'] = 'far';
                 }
 
@@ -169,6 +183,12 @@ class Fontawesome5Iconpicker extends Widget
                 {
                     $arrItem['style'] = 'light';
                     $arrItem['faStyle'] = 'fal';
+                }
+
+                if (in_array('regular', $arrItemProps['styles']))
+                {
+                    $arrItem['style'] = 'regular';
+                    $arrItem['faStyle'] = 'far';
                 }
 
                 if (in_array('brands', $arrItemProps['styles']))

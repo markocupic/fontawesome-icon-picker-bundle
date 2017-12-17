@@ -12,6 +12,7 @@ window.addEvent('domready', function () {
     var iconBox = document.id('iconBox');
     var inputIcon = document.id('ctrl_faIcon');
     var inputFilter = document.id('ctrl_faFilter');
+    var blockScroll = false;
 
 
     // Scroll on domready to selected icon
@@ -26,9 +27,11 @@ window.addEvent('domready', function () {
         this.addClass('checked');
 
         // Set value
-        var faStyle = this.getElements('.faStyleButton')[0].getProperty('data-fastyle');
-        var faId = this.getElements('.faStyleButton')[0].getProperty('data-faid');
-        inputIcon.setProperty('value', faId + '||' + faStyle);
+        var faIconPrefix = this.getElements('.faStyleButton')[0].getProperty('data-faiconprefix');
+        var faIconName = this.getElements('.faStyleButton')[0].getProperty('data-faiconname');
+        var faIconUnicode = this.getElements('.faStyleButton')[0].getProperty('data-faiconunicode');
+
+        inputIcon.setProperty('value', faIconName + '||' + faIconPrefix + '||' + faIconUnicode);
 
         // Style button handling
         iconBox.getElements('.faStyleButton.selectedStyle').removeClass('selectedStyle');
@@ -41,13 +44,23 @@ window.addEvent('domready', function () {
         iconBox.getElements('.faStyleButton').each(function (el) {
             el.getParents('.font-awesome-icon-item').removeClass('filtered');
             if (strFilter !== '') {
-                if (el.getProperty('data-faid').contains(strFilter) === false) {
+                if (el.getProperty('data-faiconname').contains(strFilter) === false) {
                     el.getParents('.font-awesome-icon-item').addClass('filtered');
                 }
             } else {
-                if (iconBox.getElements('.checked').length) {
+                if (iconBox.getElements('.font-awesome-icon-item.checked').length) {
                     // Scroll to selected icon
-                    new Fx.Scroll(iconBox).toElement(iconBox.getElements('.font-awesome-icon-item.checked')[0]);
+                    if(!blockScroll)
+                    {
+                        blockScroll = true;
+                        window.setTimeout(function () {
+                            new Fx.Scroll(iconBox).toElement(iconBox.getElements('.font-awesome-icon-item.checked')[0]);
+                        }, 400);
+                        window.setTimeout(function () {
+                            blockScroll = false;
+                        }, 1000);
+                    }
+
                 }
             }
         });
@@ -63,8 +76,10 @@ window.addEvent('domready', function () {
         this.addClass('selectedStyle');
 
         // Set value
-        var faStyle = this.getProperty('data-fastyle');
-        var faId = this.getProperty('data-faid');
-        inputIcon.setProperty('value', faId + '||' + faStyle);
+        var faIconPrefix = this.getProperty('data-faiconprefix');
+        var faIconName = this.getProperty('data-faiconname');
+        var faIconUnicode = this.getProperty('data-faiconunicode');
+
+        inputIcon.setProperty('value', faIconName + '||' + faIconPrefix + '||' + faIconUnicode);
     });
 });
