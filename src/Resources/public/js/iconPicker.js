@@ -14,6 +14,10 @@ window.addEvent('domready', function () {
     var inputFilter = document.id('ctrl_faFilter');
     var blockScroll = false;
 
+    if(!iconBox || !inputIcon || !inputFilter)
+    {
+        return;
+    }
 
     // Scroll on domready to selected icon
     if (iconBox.getElements('.font-awesome-icon-item.checked').length) {
