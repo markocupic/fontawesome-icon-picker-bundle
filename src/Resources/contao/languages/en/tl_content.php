@@ -7,8 +7,6 @@
  * @link    https://sac-kurse.kletterkader.com
  */
 
-// Fields
-$GLOBALS['TL_LANG']['tl_content']['faIcon'] = array('Icon Picker (FontAwesome v' . SERVICE_LINK_FONTAWESOME_VERSION . ')', 'W&auml;hlen Sie ein Icon aus der Font Awesome 5 Bibliothek aus.');
 
 // References
 $GLOBALS['TL_LANG']['tl_content']['far'] = 'Regular';
