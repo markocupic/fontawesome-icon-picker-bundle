@@ -158,7 +158,11 @@ class Fontawesome5Iconpicker extends Widget
     protected function getFaIds()
     {
         $arrMatches = [];
-        $strFile = file_get_contents(TL_ROOT . \Contao\Config::get('fontawesomIconPickerFontawesomeSRC'));
+        $path = \Contao\Config::get('fontawesomIconPickerFontawesomeMeta');
+        if (strpos($path, '/') !== 0) {
+            $path = '/'.$path;
+        }
+        $strFile = file_get_contents(TL_ROOT . $path);
 
         $arrYaml = Yaml::parse($strFile);
         foreach ($arrYaml as $iconName => $arrItemProps)
