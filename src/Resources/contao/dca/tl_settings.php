@@ -8,7 +8,7 @@
  */
 
 // Palettes
-$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] = str_replace('{files_legend', '{fontawesome_icon_picker_legend:hide},fontawesomIconPickerFontawesomeSRC;{files_legend', $GLOBALS['TL_DCA']['tl_settings']['palettes']['default']);
+$GLOBALS['TL_DCA']['tl_settings']['palettes']['default'] = str_replace('{files_legend', '{fontawesome_icon_picker_legend:hide},fontawesomIconPickerFontawesomeSRC,fontawesomIconPickerFontawesomeMeta;{files_legend', $GLOBALS['TL_DCA']['tl_settings']['palettes']['default']);
 
 
 // Fields
