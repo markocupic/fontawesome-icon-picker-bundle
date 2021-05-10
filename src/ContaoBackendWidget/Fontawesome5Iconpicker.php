@@ -158,7 +158,7 @@ class Fontawesome5Iconpicker extends Widget
     protected function getFaIds()
     {
         $arrMatches = [];
-        $strFile = file_get_contents(TL_ROOT . '/vendor/markocupic/fontawesome-icon-picker-bundle/src/Resources/fontawesome/icons.yml');
+        $strFile = file_get_contents(TL_ROOT . \Contao\Config::get('fontawesomIconPickerFontawesomeSRC'));
 
         $arrYaml = Yaml::parse($strFile);
         foreach ($arrYaml as $iconName => $arrItemProps)
@@ -173,12 +173,6 @@ class Fontawesome5Iconpicker extends Widget
 
             if (is_array($arrItemProps['styles']))
             {
-                if (in_array('regular', $arrItemProps['styles']))
-                {
-                    $arrItem['style'] = 'solid';
-                    $arrItem['faStyle'] = 'far';
-                }
-
                 if (in_array('light', $arrItemProps['styles']))
                 {
                     $arrItem['style'] = 'light';
@@ -191,11 +185,18 @@ class Fontawesome5Iconpicker extends Widget
                     $arrItem['faStyle'] = 'far';
                 }
 
+                if (in_array('solid', $arrItemProps['styles']))
+                {
+                    $arrItem['style'] = 'solid';
+                    $arrItem['faStyle'] = 'fas';
+                }
+
                 if (in_array('brands', $arrItemProps['styles']))
                 {
                     $arrItem['style'] = 'brands';
                     $arrItem['faStyle'] = 'fab';
                 }
+
             }
             $arrMatches[] = $arrItem;
         }
