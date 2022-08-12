@@ -32,7 +32,7 @@
     border: 1px solid #ccc;
     text-align: center;
     width: 64px;
-    height: 95px;
+    height: 122px;
 }
 
 #iconBox .font-awesome-icon-item.filtered {
@@ -77,6 +77,7 @@
     margin-right: 3px;
     visibility: hidden;
     width: 8px;
+    margin-bottom: 3px;
 }
 
 #iconBox .font-awesome-icon-item.checked .faStyleBox .faStyleButton {

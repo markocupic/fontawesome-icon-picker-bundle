@@ -41,9 +41,6 @@ class Fontawesome5Iconpicker extends Widget
         return $this->generatePicker();
     }
 
-    /**
-     * @return string
-     */
     protected function generatePicker(): string
     {
         $ContentModel = ContentModel::findByPk(Input::get('id'));
@@ -120,8 +117,6 @@ class Fontawesome5Iconpicker extends Widget
      * Get all FontAwesomeClasses as array from icons.yml
      * Download this file at:
      * https://fontawesome.com/get-started.
-     *
-     * @return array
      */
     protected function getIconsAll(): array
     {
@@ -132,21 +127,14 @@ class Fontawesome5Iconpicker extends Widget
 
         foreach ($arrYaml as $iconName => $arrItemProps) {
             $arrItem = [
-                'id'      => $iconName,
+                'id' => $iconName,
                 'faClass' => 'fa-'.$iconName,
-                'styles'  => $arrItemProps['styles'],
-                'label'   => $arrItemProps['label'],
+                'styles' => $arrItemProps['styles'],
+                'label' => $arrItemProps['label'],
                 'unicode' => $arrItemProps['unicode'],
-                //'faStyle' => '',
-                //'style' => '',
             ];
 
-            if (count($arrItem['styles']) > 3) {
-                die(print_r($arrItem['styles'], true));
-            }
-
-            if (\is_array($arrItemProps['styles']) && !empty($arrItemProps['styles'])) {
-
+            if (!empty($arrItemProps['styles']) && \is_array($arrItemProps['styles'])) {
                 if (\in_array('solid', $arrItemProps['styles'], true)) {
                     $arrItem['style'] = 'solid';
                     $arrItem['faStyle'] = 'fa-solid';
@@ -162,6 +150,9 @@ class Fontawesome5Iconpicker extends Widget
                 } elseif (\in_array('duotone', $arrItemProps['styles'], true)) {
                     $arrItem['style'] = 'duotone';
                     $arrItem['faStyle'] = 'fa-duotone';
+                } elseif (\in_array('thin', $arrItemProps['styles'], true)) {
+                    $arrItem['style'] = 'thin';
+                    $arrItem['faStyle'] = 'fa-thin';
                 }
             }
             $arrMatches[] = $arrItem;
