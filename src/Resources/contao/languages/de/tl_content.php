@@ -12,4 +12,7 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/fontawesome-icon-picker-bundle
  */
 
-$GLOBALS['TL_LANG']['tl_content']['faIcon'] = ['Fontawesome Icon', 'Select a Fontawesome icon.'];
+/*
+ * Fields
+ */
+$GLOBALS['TL_LANG']['tl_content']['faIcon'] = ['Fontawesome Icon', 'Wählen Sie ein Fontawesome Icon aus.'];

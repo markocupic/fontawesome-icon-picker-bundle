@@ -1,23 +1,19 @@
 <?php
-/**
- * Font Awesome 5 Icon Picker Contao Backend Widget
- * Copyright (c) 2008-2017 Marko Cupic
- * @package fontawesome-icon-picker-bundle
- * @author Marko Cupic m.cupic@gmx.ch, 2017
- * @link    https://sac-kurse.kletterkader.com
+
+declare(strict_types=1);
+
+/*
+ * This file is part of Fontawesome Icon Picker Bundle.
+ *
+ * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
+ * @license LGPL-3.0+
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed with this source code.
+ * @link https://github.com/markocupic/fontawesome-icon-picker-bundle
  */
 
-
-/**
- * Add fields to tl_content
- */
-$GLOBALS['TL_DCA']['tl_content']['fields']['faIcon'] = array(
-    'label' => &$GLOBALS['TL_LANG']['tl_content']['faIcon'],
-    'search' => true,
+$GLOBALS['TL_DCA']['tl_content']['fields']['faIcon'] = [
+    'search'    => true,
     'inputType' => 'fontawesome5Iconpicker',
-    'eval' => array('doNotShow' => true),
-    'sql' => "blob NULL",
-);
-
-
-
+    'sql'       => 'blob NULL',
+];

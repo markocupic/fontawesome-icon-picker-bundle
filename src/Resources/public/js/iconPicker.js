@@ -1,12 +1,12 @@
-/**
- * Font Awesome 5 Icon Picker Contao Backend Widget
- * Copyright (c) 2008-2017 Marko Cupic
- * @package fontawesome-icon-picker-bundle
- * @author Marko Cupic m.cupic@gmx.ch, 2017
- * @link    https://sac-kurse.kletterkader.com
+/*
+ * This file is part of Fontawesome Icon Picker Bundle.
+ *
+ * (c) Marko Cupic 2022 <m.cupic@gmx.ch>
+ * @license LGPL-3.0+
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed with this source code.
+ * @link https://github.com/markocupic/fontawesome-icon-picker-bundle
  */
-
-
 window.addEvent('domready', function () {
 
     var iconBox = document.id('iconBox');
@@ -14,8 +14,7 @@ window.addEvent('domready', function () {
     var inputFilter = document.id('ctrl_faFilter');
     var blockScroll = false;
 
-    if(!iconBox || !inputIcon || !inputFilter)
-    {
+    if (!iconBox || !inputIcon || !inputFilter) {
         return;
     }
 
@@ -54,8 +53,7 @@ window.addEvent('domready', function () {
             } else {
                 if (iconBox.getElements('.font-awesome-icon-item.checked').length) {
                     // Scroll to selected icon
-                    if(!blockScroll)
-                    {
+                    if (!blockScroll) {
                         blockScroll = true;
                         window.setTimeout(function () {
                             new Fx.Scroll(iconBox).toElement(iconBox.getElements('.font-awesome-icon-item.checked')[0]);
@@ -75,7 +73,7 @@ window.addEvent('domready', function () {
 
         e.preventDefault();
         e.stopPropagation();
-        // Remove and readd class
+        // Remove and add class again
         iconBox.getElements('.font-awesome-icon-item .faStyleButton').removeClass('selectedStyle');
         this.addClass('selectedStyle');
 
