@@ -12,18 +12,6 @@ declare(strict_types=1);
  * @link https://github.com/markocupic/fontawesome-icon-picker-bundle
  */
 
-namespace Markocupic\FontawesomeIconPickerBundle;
+use Markocupic\FontawesomeIconPickerBundle\ContaoBackendWidget\FontawesomeIconPicker;
 
-class Config
-{
-    public const FONTAWESOME_VERSION = '6.1.2';
-
-    public static array $styles = [
-        'fas' => 'fa-solid',
-        'far' => 'fa-regular',
-        'fal' => 'fa-light',
-        'fab' => 'fa-brands',
-        'fad' => 'fa-duotone',
-        'fat' => 'fa-thin',
-    ];
-}
+$GLOBALS['BE_FFL']['fontawesomeIconPicker'] = FontawesomeIconPicker::class;

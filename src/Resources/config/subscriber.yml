@@ -1,9 +1,0 @@
-services:
-
-  # Add assets
-  Markocupic\FontawesomeIconPickerBundle\EventSubscriber\KernelRequestSubscriber:
-    arguments:
-      - '@contao.routing.scope_matcher'
-      - '%markocupic_fontawesome_icon_picker.fontawesome_source_path%'
-    tags:
-      - { name: kernel.event_subscriber }

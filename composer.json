@@ -1,41 +1,52 @@
 {
-  "name": "markocupic/fontawesome-icon-picker-bundle",
-  "description": "Add a FontAwesome 5 icon picker input element to the Contao backend.",
-  "keywords": [
-    "contao",
-    "backend",
-    "icon",
-    "picker",
-    "Font Awesome 5"
-  ],
-  "type": "contao-module",
-  "license": "LGPL-3.0+",
-  "authors": [
-    {
-      "name": "Marko Cupic",
-      "email": "m.cupic@gmx.ch",
-      "homepage": "https://github.com/markocupic",
-      "role": "Developer"
+    "name": "markocupic/fontawesome-icon-picker-bundle",
+    "description": "Add a FontAwesome icon picker input element to the Contao backend.",
+    "keywords": [
+        "contao",
+        "backend",
+        "icon",
+        "picker",
+        "Font Awesome 5"
+    ],
+    "type": "contao-module",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Marko Cupic",
+            "email": "m.cupic@gmx.ch",
+            "homepage": "https://github.com/markocupic",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/markocupic/fontawesome-icon-picker-bundle/issues",
+        "source": "https://github.com/markocupic/fontawesome-icon-picker-bundle"
+    },
+    "require": {
+        "php": "^8.1",
+        "contao/core-bundle": "^4.13 || ^5.0"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Markocupic\\FontawesomeIconPickerBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Markocupic\\FontawesomeIconPickerBundle\\ContaoManager\\Plugin"
+    },
+    "config": {
+        "allow-plugins": {
+            "contao/manager-plugin": true,
+            "contao-components/installer": true,
+            "contao-community-alliance/composer-plugin": true
+        }
+    },
+    "scripts": {
+        "cs-fixer": "@php tools/ecs/vendor/bin/ecs check config/ contao/ src/ tests/ --config tools/ecs/config.php --fix --ansi",
+        "phpstan": "@php tools/phpstan/vendor/bin/phpstan analyse src tests",
+        "unit-tests": "@php tools/phpunit/vendor/bin/phpunit -c tools/phpunit/phpunit.xml.dist"
     }
-  ],
-  "support": {
-    "issues": "https://github.com/markocupic/fontawesome-icon-picker-bundle/issues",
-    "source": "https://github.com/markocupic/fontawesome-icon-picker-bundle"
-  },
-  "require": {
-    "php": "^8.1",
-    "contao/core-bundle": "^4.13 || ^5.0"
-  },
-  "require-dev": {
-    "contao/manager-plugin": "^2.3.1",
-    "contao/easy-coding-standard": "^5.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Markocupic\\FontawesomeIconPickerBundle\\": "src/"
-    }
-  },
-  "extra": {
-    "contao-manager-plugin": "Markocupic\\FontawesomeIconPickerBundle\\ContaoManager\\Plugin"
-  }
 }
