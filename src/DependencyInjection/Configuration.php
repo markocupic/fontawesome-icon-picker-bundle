@@ -30,21 +30,23 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('fontawesome_meta_file_path')
                     ->cannotBeEmpty()
-                    ->info('Path from root to the fontawesome meta file.')
-                    ->defaultValue('vendor/markocupic/fontawesome-icon-picker-bundle/fontawesome/icons.yaml')
+                    ->info('Path from root to the fontawesome meta file. Get the original meta file from https://github.com/FortAwesome/Font-Awesome/blob/6.4.0/metadata/icons.yml')
+                    ->defaultValue('vendor/markocupic/fontawesome-icon-picker-bundle/fontawesome/metadata/icons.yml')
                 ->end()
                 ->scalarNode('fontawesome_source_path')
                     ->defaultValue('https://use.fontawesome.com/releases/v'.Config::FONTAWESOME_VERSION.'/js/all.js')
                 ->end()
                 ->arrayNode('fontawesome_styles')
-                    ->children()
-                        ->scalarNode('fas')->cannotBeEmpty()->defaultValue('fa-solid')->end()
-                        ->scalarNode('far')->cannotBeEmpty()->defaultValue('fa-regular')->end()
-                        ->scalarNode('fal')->cannotBeEmpty()->defaultValue('fa-light')->end()
-                        ->scalarNode('fab')->cannotBeEmpty()->defaultValue('fa-brands')->end()
-                        ->scalarNode('fad')->cannotBeEmpty()->defaultValue('fa-duotone')->end()
-                        ->scalarNode('fat')->cannotBeEmpty()->defaultValue('fa-thin')->end()
-                    ->end()
+                    ->useAttributeAsKey('name')
+                    ->prototype('scalar')->end()
+                    ->defaultValue([
+                        'fas' => 'fa-solid',
+                        'far' => 'fa-regular',
+                        'fal' => 'fa-light',
+                        'fab' => 'fa-brands',
+                        'fad' => 'fa-duotone',
+                        'fat' => 'fa-thin',
+                    ])
                 ->end()
             ->end()
         ;

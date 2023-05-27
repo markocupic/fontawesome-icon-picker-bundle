@@ -19,7 +19,7 @@ use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Widget;
-use Symfony\Component\Yaml\Yaml;
+use Markocupic\FontawesomeIconPickerBundle\Util\IconUtil;
 
 class FontawesomeIconPicker extends Widget
 {
@@ -45,8 +45,10 @@ class FontawesomeIconPicker extends Widget
     {
         $ContentModel = ContentModel::findByPk(Input::get('id'));
 
-        // Load Font Awesome
-        $arrIconsAll = $this->getIconsAll();
+        // Load Font Awesome icon meta file
+        /** @var IconUtil $iconUtil */
+        $iconUtil = System::getContainer()->get(IconUtil::class);
+        $arrIconsAll = $iconUtil->getIconsAll();
 
         // Filter
         $html = '<div style="display:flex;justify-content:flex-end;align-items:center;margin-bottom:15px">';
@@ -81,7 +83,7 @@ class FontawesomeIconPicker extends Widget
 
             $html .= sprintf('<div onclick="" title="%s" class="font-awesome-icon-item%s">', $iconName, $cssClassChecked);
             $html .= sprintf('<div class="font-id-title">%s</div>', $iconName);
-            $html .= sprintf('<i class="fa-2x fa-fw %s fa-%s"></i>', $arrFa['faStyle'] ?? '', $iconName);
+            $html .= sprintf('<i class="fa-2x fa-fw %s %s"></i>', $arrFa['faClass'], $arrFa['faStyles'][0]);
             $html .= '<div class="faStyleBox">';
 
             $styles = System::getContainer()->getParameter('markocupic_fontawesome_icon_picker.fontawesome_styles');
@@ -113,60 +115,6 @@ class FontawesomeIconPicker extends Widget
         $html .= '</div>';
 
         return $html;
-    }
-
-    /**
-     * Get all FontAwesomeClasses as array from icons.yml
-     * Download this file at:
-     * https://fontawesome.com/get-started.
-     */
-    protected function getIconsAll(): array
-    {
-        $projectDir = System::getContainer()->get('kernel.projectDir');
-        $iconMetaFilePath = trim(
-            System::getContainer()->getParameter('markocupic_fontawesome_icon_picker.fontawesome_meta_file_path'),
-            '/',
-        );
-
-        $arrMatches = [];
-        $strFile = file_get_contents($projectDir.'/'.$iconMetaFilePath);
-
-        $arrYaml = Yaml::parse($strFile);
-
-        foreach ($arrYaml as $iconName => $arrItemProps) {
-            $arrItem = [
-                'id' => $iconName,
-                'faClass' => 'fa-'.$iconName,
-                'styles' => $arrItemProps['styles'],
-                'label' => $arrItemProps['label'],
-                'unicode' => $arrItemProps['unicode'],
-            ];
-
-            if (!empty($arrItemProps['styles']) && \is_array($arrItemProps['styles'])) {
-                if (\in_array('solid', $arrItemProps['styles'], true)) {
-                    $arrItem['style'] = 'solid';
-                    $arrItem['faStyle'] = 'fa-solid';
-                } elseif (\in_array('light', $arrItemProps['styles'], true)) {
-                    $arrItem['style'] = 'light';
-                    $arrItem['faStyle'] = 'fa-light';
-                } elseif (\in_array('regular', $arrItemProps['styles'], true)) {
-                    $arrItem['style'] = 'regular';
-                    $arrItem['faStyle'] = 'fa-regular';
-                } elseif (\in_array('brands', $arrItemProps['styles'], true)) {
-                    $arrItem['style'] = 'brands';
-                    $arrItem['faStyle'] = 'fa-brands';
-                } elseif (\in_array('duotone', $arrItemProps['styles'], true)) {
-                    $arrItem['style'] = 'duotone';
-                    $arrItem['faStyle'] = 'fa-duotone';
-                } elseif (\in_array('thin', $arrItemProps['styles'], true)) {
-                    $arrItem['style'] = 'thin';
-                    $arrItem['faStyle'] = 'fa-thin';
-                }
-            }
-            $arrMatches[] = $arrItem;
-        }
-
-        return $arrMatches;
     }
 
     /**

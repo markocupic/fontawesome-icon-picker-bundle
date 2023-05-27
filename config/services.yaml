@@ -1,8 +1,16 @@
 services:
-  _defaults:
-    autowire: true
-    autoconfigure: true
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        bind:
+            $projectDir: '%kernel.project_dir%'
+            $fontawesomeSourcePath: '%markocupic_fontawesome_icon_picker.fontawesome_source_path%'
+            $fontawesomeMetaFilePath: '%markocupic_fontawesome_icon_picker.fontawesome_meta_file_path%'
+            $fontawesomeStyles: '%markocupic_fontawesome_icon_picker.fontawesome_styles%'
 
-  Markocupic\FontawesomeIconPickerBundle\:
-    resource: ../src/
-    exclude: ../../{DependencyInjection}
+    Markocupic\FontawesomeIconPickerBundle\:
+        resource: ../src/
+        exclude: ../../{DependencyInjection}
+
+    Markocupic\FontawesomeIconPickerBundle\Util\IconUtil:
+        public: true
