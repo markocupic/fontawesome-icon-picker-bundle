@@ -33,96 +33,80 @@ class FontawesomeIconPicker extends Widget
      */
     protected $strTemplate = 'be_widget';
 
-    /**
-     * @return string
-     */
-    public function generate()
+    public function generate(): string
     {
         return $this->generatePicker();
     }
 
     protected function generatePicker(): string
     {
-        $ContentModel = ContentModel::findByPk(Input::get('id'));
+        $model = ContentModel::findByPk(Input::get('id'));
 
-        // Load Font Awesome icon meta file
         /** @var IconUtil $iconUtil */
         $iconUtil = System::getContainer()->get(IconUtil::class);
+
+        // Load Font Awesome icon meta file
         $arrIconsAll = $iconUtil->getIconsAll();
 
-        // Filter
-        $html = '<div style="display:flex;justify-content:flex-end;align-items:center;margin-bottom:15px">';
-        $html .= '<h3 style="padding:0;margin:0 10px 0 0"><label>'.$GLOBALS['TL_LANG']['MSC']['faIconFilter'].'</label></h3>';
-        $html .= '<input type="text" id="ctrl_faFilter" class="tl_text" style="max-width:200px">';
-        $html .= '</div>';
-        // Build radio-button-list
-        $html .= '<div id="iconBox">';
+        $varValue = '';
+        $selectedIcon = null;
+        $selectedIconPrefix = null;
+        $arrIcon = StringUtil::deserialize($model->faIcon);
 
-        $inputValue = '';
-        $currIconName = null;
-        $currIconPrefix = null;
+        $arrIcons = [];
 
-        if (\count(StringUtil::deserialize($ContentModel->faIcon, true)) > 0) {
-            $inputValue = implode('||', StringUtil::deserialize($ContentModel->faIcon, true));
-            $arrFa = StringUtil::deserialize($ContentModel->faIcon, true);
-            $currIconName = $arrFa[0];
-            $currIconPrefix = $arrFa[1];
+        if (!empty($arrIcon) && \is_array($arrIcon)) {
+            $varValue = implode('||', StringUtil::deserialize($model->faIcon, true));
+            $selectedIcon = $arrIcon[0] ?? '';
+            $selectedIconPrefix = $arrIcon[1] ?? '';
         }
 
-        $html .= sprintf('<input type="hidden" id="ctrl_faIcon" name="faIcon" value="%s">', $inputValue);
-
         foreach ($arrIconsAll as $arrFa) {
-            $cssClassChecked = '';
-            $iconName = $arrFa['id'];
-            $iconLabel = $arrFa['label'];
-            $iconUnicode = $arrFa['unicode'];
+            $arrIcon = [];
+            $arrIcon['fa_id'] = $arrFa['id'];
+            $arrIcon['fa_label'] = $arrFa['label'];
+            $arrIcon['fa_attr_selected'] = '';
+            $arrIcon['fa_class'] = $arrFa['faClass'];
+            $arrIcon['fa_style'] = $arrFa['faStyles'][0];
+            $arrIcon['fa_unicode'] = $arrFa['unicode'];
+            $arrIcon['fa_styles'] = [];
 
-            if ($currIconName === $iconName) {
-                $cssClassChecked = ' checked';
+            if ($selectedIcon === $arrFa['id']) {
+                $arrIcon['fa_attr_selected'] = ' checked';
             }
-
-            $html .= sprintf('<div onclick="" title="%s" class="font-awesome-icon-item%s">', $iconName, $cssClassChecked);
-            $html .= sprintf('<div class="font-id-title">%s</div>', $iconName);
-            $html .= sprintf('<i class="fa-2x fa-fw %s %s"></i>', $arrFa['faClass'], $arrFa['faStyles'][0]);
-            $html .= '<div class="faStyleBox">';
 
             $styles = System::getContainer()->getParameter('markocupic_fontawesome_icon_picker.fontawesome_styles');
 
-            foreach ($styles as $shortcut => $style) {
-                $selectedStyle = '';
-
+            foreach ($styles as $prefix => $style) {
                 if (\in_array(str_replace('fa-', '', $style), $arrFa['styles'], true)) {
-                    if ($shortcut === $currIconPrefix) {
-                        $selectedStyle = ' selectedStyle';
+                    $iconStyle = [];
+                    $iconStyle['style_shortcut'] = substr(ucfirst(str_replace('fa-', '', $style)), 0, 1);
+                    $iconStyle['style_prefix'] = $prefix;
+                    $iconStyle['style_attr_selected'] = '';
+
+                    if ($prefix === $selectedIconPrefix) {
+                        $iconStyle['style_attr_selected'] = ' selectedStyle';
                     }
-                    $html .= sprintf(
-                        '<div class="faStyleButton%s" role="button" title="%s" data-falabel="%s" data-faiconunicode="%s" data-faiconprefix="%s" data-faiconname="%s">%s</div>',
-                        $selectedStyle,
-                        $style,
-                        $iconLabel,
-                        $iconUnicode,
-                        $shortcut,
-                        $iconName,
-                        substr(ucfirst(str_replace('fa-', '', $style)), 0, 1),
-                    );
+
+                    $arrIcon['fa_styles'][] = $iconStyle;
                 }
             }
 
-            $html .= '</div>';
-            $html .= '</div>';
+            $arrIcons[] = $arrIcon;
         }
 
-        $html .= '</div>';
+        $twig = System::getContainer()->get('twig');
 
-        return $html;
+        return $twig->render(
+            '@MarkocupicFontawesomeIconPicker/fontawesome_icon_picker_widget.html.twig',
+            [
+                'input_value' => $varValue,
+                'icons' => $arrIcons,
+            ]
+        );
     }
 
-    /**
-     * @param mixed $varInput
-     *
-     * @return mixed
-     */
-    protected function validator($varInput)
+    protected function validator(mixed $varInput): mixed
     {
         $varInput = explode('||', $varInput);
         $varInput = serialize($varInput);

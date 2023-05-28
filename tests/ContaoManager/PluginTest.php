@@ -18,8 +18,8 @@ use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\DelegatingParser;
 use Contao\TestCase\ContaoTestCase;
-use Markocupic\FontawesomeIconPickerBundle\MarkocupicFontawesomeIconPickerBundle;
 use Markocupic\FontawesomeIconPickerBundle\ContaoManager\Plugin;
+use Markocupic\FontawesomeIconPickerBundle\MarkocupicFontawesomeIconPickerBundle;
 
 class PluginTest extends ContaoTestCase
 {
