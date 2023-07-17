@@ -99,6 +99,7 @@ class FontawesomeIconPicker extends Widget
             '@MarkocupicFontawesomeIconPicker/fontawesome_icon_picker_widget.html.twig',
             [
                 'input_value' => $varValue,
+                'name' => $this->strName,
                 'icons' => $arrIcons,
             ]
         );
