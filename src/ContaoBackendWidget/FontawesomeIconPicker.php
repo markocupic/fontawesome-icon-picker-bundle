@@ -40,8 +40,6 @@ class FontawesomeIconPicker extends Widget
 
     protected function generatePicker(): string
     {
-        $model = ContentModel::findByPk(Input::get('id'));
-
         /** @var IconUtil $iconUtil */
         $iconUtil = System::getContainer()->get(IconUtil::class);
 
@@ -51,12 +49,12 @@ class FontawesomeIconPicker extends Widget
         $varValue = '';
         $selectedIcon = null;
         $selectedIconPrefix = null;
-        $arrIcon = StringUtil::deserialize($model->faIcon);
+        $arrIcon = $this->varValue;
 
         $arrIcons = [];
 
         if (!empty($arrIcon) && \is_array($arrIcon)) {
-            $varValue = implode('||', StringUtil::deserialize($model->faIcon, true));
+            $varValue = implode('||', $this->varValue);
             $selectedIcon = $arrIcon[0] ?? '';
             $selectedIconPrefix = $arrIcon[1] ?? '';
         }
