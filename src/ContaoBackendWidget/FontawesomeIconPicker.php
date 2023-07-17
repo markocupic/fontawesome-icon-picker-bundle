@@ -108,8 +108,10 @@ class FontawesomeIconPicker extends Widget
 
     protected function validator(mixed $varInput): mixed
     {
-        $varInput = explode('||', $varInput);
-        $varInput = serialize($varInput);
+        if (null !== $varInput) {
+            $varInput = explode('||', $varInput);
+            $varInput = serialize($varInput);
+        }
 
         return parent::validator($varInput);
     }
