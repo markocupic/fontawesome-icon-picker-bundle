@@ -40,8 +40,6 @@ class FontawesomeIconPicker extends Widget
 
     protected function generatePicker(): string
     {
-        $model = ContentModel::findByPk(Input::get('id'));
-
         /** @var IconUtil $iconUtil */
         $iconUtil = System::getContainer()->get(IconUtil::class);
 
@@ -51,12 +49,12 @@ class FontawesomeIconPicker extends Widget
         $varValue = '';
         $selectedIcon = null;
         $selectedIconPrefix = null;
-        $arrIcon = StringUtil::deserialize($model->faIcon);
+        $arrIcon = $this->varValue;
 
         $arrIcons = [];
 
         if (!empty($arrIcon) && \is_array($arrIcon)) {
-            $varValue = implode('||', StringUtil::deserialize($model->faIcon, true));
+            $varValue = implode('||', $this->varValue);
             $selectedIcon = $arrIcon[0] ?? '';
             $selectedIconPrefix = $arrIcon[1] ?? '';
         }
@@ -101,6 +99,7 @@ class FontawesomeIconPicker extends Widget
             '@MarkocupicFontawesomeIconPicker/fontawesome_icon_picker_widget.html.twig',
             [
                 'input_value' => $varValue,
+                'name' => $this->strName,
                 'icons' => $arrIcons,
             ]
         );
@@ -108,8 +107,10 @@ class FontawesomeIconPicker extends Widget
 
     protected function validator(mixed $varInput): mixed
     {
-        $varInput = explode('||', $varInput);
-        $varInput = serialize($varInput);
+        if (null !== $varInput) {
+            $varInput = explode('||', $varInput);
+            $varInput = serialize($varInput);
+        }
 
         return parent::validator($varInput);
     }
