@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Fontawesome Icon Picker Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic <m.cupic@gmx.ch>
  * @license LGPL-3.0+
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -41,7 +41,7 @@ class KernelRequestSubscriber implements EventSubscriberInterface
 
         if ($this->scopeMatcher->isBackendRequest($request)) {
             $GLOBALS['TL_CSS'][] = 'bundles/markocupicfontawesomeiconpicker/css/iconPicker.css|static';
-            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicfontawesomeiconpicker/js/iconPicker.js';
+            $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/markocupicfontawesomeiconpicker/js/iconPicker.js|static';
             $GLOBALS['TL_JAVASCRIPT'][] = $this->fontawesomeSourcePath;
         }
     }

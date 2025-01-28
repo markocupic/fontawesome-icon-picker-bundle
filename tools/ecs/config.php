@@ -22,7 +22,7 @@ return static function (ECSConfig $ecsConfig): void {
         ->set(HeaderCommentFixer::class)
         ->call('configure', [
             [
-                'header' => "This file is part of Fontawesome Icon Picker Bundle.\n\n(c) Marko Cupic ".\date("Y")." <m.cupic@gmx.ch>\n@license LGPL-3.0+\nFor the full copyright and license information,\nplease view the LICENSE file that was distributed with this source code.\n@link https://github.com/markocupic/fontawesome-icon-picker-bundle",
+                'header' => "This file is part of Fontawesome Icon Picker Bundle.\n\n(c) Marko Cupic <m.cupic@gmx.ch>\n@license LGPL-3.0+\nFor the full copyright and license information,\nplease view the LICENSE file that was distributed with this source code.\n@link https://github.com/markocupic/fontawesome-icon-picker-bundle",
             ],
         ]);
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Fontawesome Icon Picker Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic <m.cupic@gmx.ch>
  * @license LGPL-3.0+
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -14,9 +14,6 @@ declare(strict_types=1);
 
 namespace Markocupic\FontawesomeIconPickerBundle\ContaoBackendWidget;
 
-use Contao\ContentModel;
-use Contao\Input;
-use Contao\StringUtil;
 use Contao\System;
 use Contao\Widget;
 use Markocupic\FontawesomeIconPickerBundle\Util\IconUtil;
