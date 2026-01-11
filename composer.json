@@ -27,7 +27,9 @@
         "contao/core-bundle": "^4.13 || ^5.0"
     },
     "require-dev": {
-        "contao/manager-plugin": "^2.3"
+        "contao/manager-plugin": "^2.3",
+        "contao/easy-coding-standard": "6.0",
+        "phpstan/phpstan": "^1.0 || ^2.0"
     },
     "autoload": {
         "psr-4": {
