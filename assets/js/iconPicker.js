@@ -38,11 +38,11 @@ window.addEvent('domready', function () {
         this.addClass('checked');
 
         // Set value
-        const faIconPrefix = this.getElements('.faStyleButton')[0].getProperty('data-faiconprefix');
+        const faIconStyle = this.getElements('.faStyleButton')[0].getProperty('data-faiconstyle');
         const faIconName = this.getElements('.faStyleButton')[0].getProperty('data-faiconname');
         const faIconUnicode = this.getElements('.faStyleButton')[0].getProperty('data-faiconunicode');
 
-        inputIcon.setProperty('value', faIconName + '||' + faIconPrefix + '||' + faIconUnicode);
+        inputIcon.setProperty('value', faIconName + '||' + faIconStyle + '||' + faIconUnicode);
 
         // Style button handling
         iconBox.getElements('.faStyleButton.selectedStyle').removeClass('selectedStyle');
@@ -86,10 +86,10 @@ window.addEvent('domready', function () {
         this.addClass('selectedStyle');
 
         // Set value
-        const faIconPrefix = this.getProperty('data-faiconprefix');
+        const faIconStyle = this.getProperty('data-faiconstyle');
         const faIconName = this.getProperty('data-faiconname');
         const faIconUnicode = this.getProperty('data-faiconunicode');
 
-        inputIcon.setProperty('value', faIconName + '||' + faIconPrefix + '||' + faIconUnicode);
+        inputIcon.setProperty('value', faIconName + '||' + faIconStyle + '||' + faIconUnicode);
     });
 });

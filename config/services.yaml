@@ -6,7 +6,7 @@ services:
             $projectDir: '%kernel.project_dir%'
             $fontawesomeSourcePath: '%markocupic_fontawesome_icon_picker.fontawesome_source_path%'
             $fontawesomeMetaFilePath: '%markocupic_fontawesome_icon_picker.fontawesome_meta_file_path%'
-            $fontawesomeStyles: '%markocupic_fontawesome_icon_picker.fontawesome_styles%'
+            $fontawesomeAllowedStyles: '%markocupic_fontawesome_icon_picker.fontawesome_allowed_styles%'
 
     Markocupic\FontawesomeIconPickerBundle\:
         resource: ../src/

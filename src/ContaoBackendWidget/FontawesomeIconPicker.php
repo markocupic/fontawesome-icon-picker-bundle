@@ -6,7 +6,7 @@ declare(strict_types=1);
  * This file is part of Fontawesome Icon Picker Bundle.
  *
  * (c) Marko Cupic <m.cupic@gmx.ch>
- * @license LGPL-3.0+
+ * @license GPL-3.0-or-later
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
  * @link https://github.com/markocupic/fontawesome-icon-picker-bundle
@@ -45,7 +45,7 @@ class FontawesomeIconPicker extends Widget
 
         $varValue = '';
         $selectedIcon = null;
-        $selectedIconPrefix = null;
+        $selectedStyle = null;
         $arrIcon = $this->varValue;
 
         $arrIcons = [];
@@ -53,7 +53,7 @@ class FontawesomeIconPicker extends Widget
         if (!empty($arrIcon) && \is_array($arrIcon)) {
             $varValue = implode('||', $this->varValue);
             $selectedIcon = $arrIcon[0] ?? '';
-            $selectedIconPrefix = $arrIcon[1] ?? '';
+            $selectedStyle = $arrIcon[1] ?? '';
         }
 
         foreach ($arrIconsAll as $arrFa) {
@@ -62,26 +62,30 @@ class FontawesomeIconPicker extends Widget
             $arrIcon['fa_label'] = $arrFa['label'];
             $arrIcon['fa_attr_selected'] = '';
             $arrIcon['fa_class'] = $arrFa['faClass'];
-            $arrIcon['fa_style'] = $arrFa['faStyles'][0];
-            $arrIcon['fa_unicode'] = $arrFa['unicode'];
+            $arrIcon['fa_unicode'] = $arrFa['unicode'] ?? '';
+            $arrIcon['fa_available_styles'] = [];
             $arrIcon['fa_styles'] = [];
+
+            $arrIcon['fa_styles_shortcut'] = '';
 
             if ($selectedIcon === $arrFa['id']) {
                 $arrIcon['fa_attr_selected'] = ' checked';
             }
 
-            $styles = System::getContainer()->getParameter('markocupic_fontawesome_icon_picker.fontawesome_styles');
+            $styles = System::getContainer()->getParameter('markocupic_fontawesome_icon_picker.fontawesome_allowed_styles');
 
-            foreach ($styles as $prefix => $style) {
+            foreach ($styles as $style) {
                 if (\in_array(str_replace('fa-', '', $style), $arrFa['styles'], true)) {
                     $iconStyle = [];
+                    $iconStyle['style'] = $style;
                     $iconStyle['style_shortcut'] = substr(ucfirst(str_replace('fa-', '', $style)), 0, 1);
-                    $iconStyle['style_prefix'] = $prefix;
                     $iconStyle['style_attr_selected'] = '';
 
-                    if ($prefix === $selectedIconPrefix) {
+                    if ($style === $selectedStyle) {
                         $iconStyle['style_attr_selected'] = ' selectedStyle';
                     }
+
+                    $arrIcon['fa_available_styles'][] = $style;
 
                     $arrIcon['fa_styles'][] = $iconStyle;
                 }
@@ -92,14 +96,11 @@ class FontawesomeIconPicker extends Widget
 
         $twig = System::getContainer()->get('twig');
 
-        return $twig->render(
-            '@MarkocupicFontawesomeIconPicker/fontawesome_icon_picker_widget.html.twig',
-            [
-                'input_value' => $varValue,
-                'name' => $this->strName,
-                'icons' => $arrIcons,
-            ]
-        );
+        return $twig->render('@MarkocupicFontawesomeIconPicker/fontawesome_icon_picker_widget.html.twig', [
+            'input_value' => $varValue,
+            'name' => $this->strName,
+            'icons' => $arrIcons,
+        ]);
     }
 
     protected function validator(mixed $varInput): mixed

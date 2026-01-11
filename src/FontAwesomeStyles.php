@@ -14,12 +14,17 @@ declare(strict_types=1);
 
 namespace Markocupic\FontawesomeIconPickerBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-class MarkocupicFontawesomeIconPickerBundle extends Bundle
+class FontAwesomeStyles
 {
-    public function getPath(): string
+    public static function getStyles(): array
     {
-        return \dirname(__DIR__);
+        return [
+            'fa-solid',
+            'fa-regular',
+            'fa-light',
+            'fa-brands',
+            'fa-duotone',
+            'fa-thin',
+        ];
     }
 }
