@@ -4,6 +4,20 @@
 
 <img src="docs/images/backend.png" width="600">
 
+## DCA
+
+Use the `fontawesomeIconPicker` input type to add the Font Awesome Icon Picker form widget to your tl_content table.
+
+```php
+$GLOBALS['TL_DCA']['tl_content']['fields']['serviceLinkFaIcon'] = [
+    'exclude'   => true,
+    'search'    => true,
+    'inputType' => 'fontawesomeIconPicker',
+    'eval'      => ['doNotShow' => true],
+    'sql'       => 'blob NULL',
+];
+```
+
 ## Configuration
 
 Out of the box, the bundle uses the free version of [Font Awesome](https://fontawesome.com/icons) and does not require any configuration.
