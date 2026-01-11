@@ -40,3 +40,7 @@ markocupic_fontawesome_icon_picker:
   # Add the path to your custom fontawesome icons meta file.
   fontawesome_meta_file_path: 'files/fontawesome-pro/metadata/icons.yml'
 ```
+
+## Frontend usage
+
+<mark>This extension will not add Font Awesome to your frontend. You have to add it yourself in your layout.</mark>
