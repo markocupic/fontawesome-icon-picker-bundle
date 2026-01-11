@@ -12,7 +12,7 @@ But you can also use the Pro version by changing the configuration in your `conf
 ```yaml
 markocupic_fontawesome_icon_picker:
   # Use your custom Font Awesome (Pro) version here:
-  fontawesome_source_path: 'https://kit.fontawesome.com/12345sdf65.js' # or a local path: files/fontawesome-pro/js/all.min.js
+  fontawesome_source_path: 'files/fontawesome-pro/js/all.min.js' # You can even use the url to your kit 'https://kit.fontawesome.com/12345sdf65.js
   # Set the version of Font Awesome you want to use.
   fontawesome_version: '7.0.1'
   # Set the allowed styles
