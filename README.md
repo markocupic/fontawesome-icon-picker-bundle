@@ -1,6 +1,6 @@
 ![Logo](https://github.com/markocupic/markocupic/blob/main/logo.png)
 
-# Font Awesome 5 Icon Picker Contao Backend Widget
+# Font Awesome 7 Icon Picker Contao Backend Widget
 ![Backend](docs/images/backend.png)
 
 ## Configuration
