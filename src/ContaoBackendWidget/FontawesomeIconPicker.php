@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Markocupic\FontawesomeIconPickerBundle\ContaoBackendWidget;
 
+use Contao\StringUtil;
 use Contao\System;
 use Contao\Widget;
 use Markocupic\FontawesomeIconPickerBundle\Util\IconUtil;
@@ -65,6 +66,10 @@ class FontawesomeIconPicker extends Widget
             $arrIcon['fa_unicode'] = $arrFa['unicode'] ?? '';
             $arrIcon['fa_available_styles'] = [];
             $arrIcon['fa_styles'] = [];
+            $arrIcon['fa_search_terms'] = '';
+            if(isset($arrFa['search']['terms'])){
+                $arrIcon['fa_search_terms'] = implode(', ', $arrFa['search']['terms']);
+            }
 
             $arrIcon['fa_styles_shortcut'] = '';
 
@@ -106,7 +111,7 @@ class FontawesomeIconPicker extends Widget
     protected function validator(mixed $varInput): mixed
     {
         if (null !== $varInput) {
-            $varInput = explode('||', $varInput);
+            $varInput = json_decode(StringUtil::revertInputEncoding($varInput),false);
             $varInput = serialize($varInput);
         }
 

@@ -1,19 +1,12 @@
-/*
- * This file is part of Fontawesome Icon Picker Bundle.
- *
- * (c) Marko Cupic <m.cupic@gmx.ch>
- * @license LGPL-3.0+
- * For the full copyright and license information,
- * please view the LICENSE file that was distributed with this source code.
- * @link https://github.com/markocupic/fontawesome-icon-picker-bundle
- */
-window.addEvent('domready', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const iconBoxId = 'iconBox';
     const iconBoxInnerId = 'iconBoxInner';
-    const iconBox = document.id(iconBoxId);
-    const iconBoxInner = document.id(iconBoxInnerId);
-    const inputIcon = document.id('ctrl_faIcon');
-    const inputFilter = document.id('ctrl_faFilter');
+
+    const iconBox = document.getElementById(iconBoxId);
+    const iconBoxInner = document.getElementById(iconBoxInnerId);
+    const inputIcon = document.getElementById('ctrl_faIcon');
+    const inputFilter = document.getElementById('ctrl_faFilter');
+
     let blockScroll = false;
 
     if (!iconBox || !inputIcon || !inputFilter) {
@@ -21,75 +14,86 @@ window.addEvent('domready', function () {
     }
 
     // Scroll to the selected item
-    (function () {
-        if (iconBox) {
-            const selectedItem = iconBoxInner.querySelector('.font-awesome-icon-item.checked');
-
-            if (selectedItem) {
-                iconBox.scrollTop = selectedItem.offsetTop - 120;
-            }
+    (() => {
+        const selectedItem = iconBoxInner?.querySelector('.font-awesome-icon-item.checked');
+        if (selectedItem) {
+            iconBox.scrollTop = selectedItem.offsetTop - 120;
         }
     })();
 
-    // Event click on the icon
-    iconBox.getElements('.font-awesome-icon-item').addEvent('click', function () {
-        // Remove and re-add class 'checked'
-        iconBox.getElements('.font-awesome-icon-item.checked').removeClass('checked');
-        this.addClass('checked');
+    // Event: click on icon item
+    iconBox.querySelectorAll('.font-awesome-icon-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            // Remove old "checked"
+            iconBox.querySelectorAll('.font-awesome-icon-item.checked').forEach(el => el.classList.remove('checked'));
 
-        // Set value
-        const faIconStyle = this.getElements('.faStyleButton')[0].getProperty('data-faiconstyle');
-        const faIconName = this.getElements('.faStyleButton')[0].getProperty('data-faiconname');
-        const faIconUnicode = this.getElements('.faStyleButton')[0].getProperty('data-faiconunicode');
+            item.classList.add('checked');
 
-        inputIcon.setProperty('value', faIconName + '||' + faIconStyle + '||' + faIconUnicode);
+            // Set the style of the first button as default
+            const btn = item.querySelector('.faStyleButton');
+            const faIconStyle = btn.dataset.faiconstyle;
+            const faIconName = item.dataset.faiconname;
+            const faIconUnicode = item.dataset.faiconunicode;
 
-        // Style button handling
-        iconBox.getElements('.faStyleButton.selectedStyle').removeClass('selectedStyle');
-        this.getElements('.faStyleButton')[0].addClass('selectedStyle');
+            inputIcon.value = JSON.stringify([faIconName, faIconStyle, faIconUnicode]);
+
+            // Style button handling
+            iconBox.querySelectorAll('.faStyleButton.selectedStyle').forEach(el => el.classList.remove('selectedStyle'));
+
+            btn.classList.add('selectedStyle');
+        });
     });
 
-    // Add event to filter input
-    inputFilter.addEvent('input', function () {
-        const strFilter = this.getProperty('value').trim(' ');
-        iconBox.getElements('.faStyleButton').each(function (el) {
-            el.getParents('.font-awesome-icon-item').removeClass('filtered');
+    // Event: filter input
+    inputFilter.addEventListener('input', () => {
+        const strFilter = inputFilter.value.trim();
+
+        iconBox.querySelectorAll('.font-awesome-icon-item').forEach(item => {
+            item.classList.remove('filtered');
+
             if (strFilter !== '') {
-                if (el.getProperty('data-faiconname').contains(strFilter) === false) {
-                    el.getParents('.font-awesome-icon-item').addClass('filtered');
+                const name = item.dataset.faiconname || '';
+                const terms = item.dataset.fasearchterms || '';
+
+                if (!name.includes(strFilter) && !terms.includes(strFilter)) {
+                    item.classList.add('filtered');
                 }
             } else {
-                if (iconBox.getElements('.font-awesome-icon-item.checked').length) {
-                    // Scroll to selected icon
-                    if (!blockScroll) {
-                        blockScroll = true;
-                        window.setTimeout(function () {
-                            new Fx.Scroll(iconBox).toElement(iconBox.getElements('.font-awesome-icon-item.checked')[0]);
-                        }, 400);
-                        window.setTimeout(function () {
-                            blockScroll = false;
-                        }, 1000);
-                    }
+                // Scroll back to the selected icon
+                const selected = iconBox.querySelector('.font-awesome-icon-item.checked');
+                if (selected && !blockScroll) {
+                    blockScroll = true;
 
+                    setTimeout(() => {
+                        selected.scrollIntoView({behavior: 'smooth', block: 'center'});
+                    }, 400);
+
+                    setTimeout(() => {
+                        blockScroll = false;
+                    }, 1000);
                 }
             }
         });
     });
 
-    // Event click on style buttons
-    iconBox.getElements('.font-awesome-icon-item .faStyleButton').addEvent('click', function (e) {
+    // Event: click on style buttons
+    iconBox.querySelectorAll('.font-awesome-icon-item .faStyleButton').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            e.stopPropagation();
 
-        e.preventDefault();
-        e.stopPropagation();
-        // Remove and add class again
-        iconBox.getElements('.font-awesome-icon-item .faStyleButton').removeClass('selectedStyle');
-        this.addClass('selectedStyle');
+            // Remove old selectedStyle
+            iconBox.querySelectorAll('.faStyleButton.selectedStyle').forEach(el => el.classList.remove('selectedStyle'));
 
-        // Set value
-        const faIconStyle = this.getProperty('data-faiconstyle');
-        const faIconName = this.getProperty('data-faiconname');
-        const faIconUnicode = this.getProperty('data-faiconunicode');
+            btn.classList.add('selectedStyle');
 
-        inputIcon.setProperty('value', faIconName + '||' + faIconStyle + '||' + faIconUnicode);
+            const iconItem = btn.closest('.font-awesome-icon-item');
+            // Set value
+            const faIconStyle = btn.dataset.faiconstyle;
+            const faIconName = iconItem.dataset.faiconname;
+            const faIconUnicode = iconItem.dataset.faiconunicode;
+
+            inputIcon.value = JSON.stringify([faIconName, faIconStyle, faIconUnicode]);
+        });
     });
 });

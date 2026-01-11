@@ -46,6 +46,9 @@ class IconUtil
                             'label' => $arrItemProps['label'],
                             'unicode' => $arrItemProps['unicode'],
                             'faStyles' => array_map(static fn ($faStyle) => 'fa-'.$faStyle, $arrItemProps['styles']),
+                            'search' => [
+                                'terms' => $arrItemProps['search']['terms'],
+                            ],
                         ];
                         break;
                     }

@@ -9,12 +9,12 @@
     <input type="hidden" id="ctrl_faIcon" name="{{ name }}" value="{{ input_value }}">
     <div id="iconBoxInner">
         {% for icon in icons %}
-            <div title="{{ icon.fa_id }}" class="font-awesome-icon-item{{ icon.fa_attr_selected }}">
+            <div title="{{ icon.fa_id }}" class="font-awesome-icon-item{{ icon.fa_attr_selected }}" data-faiconname="{{ icon.fa_id }}" data-falabel="{{ icon.fa_label }}" data-faiconunicode="{{ icon.fa_unicode }}" data-fasearchterms="{{ icon.fa_search_terms }}">
                 <div class="font-id-title">{{ icon.fa_id }}</div>
                 <i class="fa-2x fa-fw {{ icon.fa_available_styles[0] ?? '' }} {{ icon.fa_class }}"></i>
                 <div class="faStyleBox">
                     {% for style in icon.fa_styles %}
-                        <div class="faStyleButton{{ style.style_attr_selected }}" role="button" title="{{ icon.fa_id }}" data-falabel="{{ icon.fa_label }}" data-faiconunicode="{{ icon.fa_unicode }}" data-faiconstyle="{{ style.style }}" data-faiconname="{{ icon.fa_id }}">{{ style.style_shortcut }}</div>
+                        <div class="faStyleButton{{ style.style_attr_selected }}" role="button" title="{{ style.style }}" data-faiconstyle="{{ style.style }}">{{ style.style_shortcut }}</div>
                     {% endfor %}
                 </div>
             </div>

@@ -9,12 +9,13 @@
  */
 
 #ctrl_faFilter {
-    background-color: #a5daf8;
+    background-color: var(--form-bg);
+    border: 1px solid var(--form-border);
 }
 
 #iconBox {
     padding: 3px;
-    border: 1px solid #aaaaaa;
+    border: 1px solid var(--form-border);
     height: auto;
     max-height: 600px;
     overflow: scroll;
