@@ -52,7 +52,7 @@ class FontawesomeIconPicker extends Widget
         $arrIcons = [];
 
         if (!empty($arrIcon) && \is_array($arrIcon)) {
-            $varValue = implode('||', $this->varValue);
+            $varValue = json_encode($this->varValue);
             $selectedIcon = $arrIcon[0] ?? '';
             $selectedStyle = $arrIcon[1] ?? '';
         }
