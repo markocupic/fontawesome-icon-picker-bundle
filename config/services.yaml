@@ -10,7 +10,10 @@ services:
 
     Markocupic\FontawesomeIconPickerBundle\:
         resource: ../src/
-        exclude: ../../{DependencyInjection}
+        exclude:
+            - ../src/ContaoManager
+            - ../src/DependencyInjection
+            - ../src/MarkocupicFontawesomeIconPickerBundle.php
 
     Markocupic\FontawesomeIconPickerBundle\Util\IconUtil:
         public: true

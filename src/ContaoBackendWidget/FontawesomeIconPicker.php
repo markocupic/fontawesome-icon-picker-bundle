@@ -67,7 +67,7 @@ class FontawesomeIconPicker extends Widget
             $arrIcon['fa_available_styles'] = [];
             $arrIcon['fa_styles'] = [];
             $arrIcon['fa_search_terms'] = '';
-            if(isset($arrFa['search']['terms'])){
+            if (isset($arrFa['search']['terms'])) {
                 $arrIcon['fa_search_terms'] = implode(', ', $arrFa['search']['terms']);
             }
 
@@ -110,11 +110,20 @@ class FontawesomeIconPicker extends Widget
 
     protected function validator(mixed $varInput): mixed
     {
-        if (null !== $varInput) {
-            $varInput = json_decode(StringUtil::revertInputEncoding($varInput),false);
-            $varInput = serialize($varInput);
+        if (null === $varInput || '' === $varInput) {
+            return parent::validator($varInput);
         }
 
-        return parent::validator($varInput);
+        // Contao 5 encodes the input, Contao 6 does not
+        $icon = json_decode(StringUtil::revertInputEncoding((string) $varInput), true);
+
+        // Expected format: ["icon-name", "fa-style", "unicode"]
+        if (!\is_array($icon) || !array_is_list($icon) || \count($icon) < 2 || array_filter($icon, static fn ($v): bool => !\is_string($v))) {
+            $this->addError('Invalid icon.');
+
+            return '';
+        }
+
+        return parent::validator(serialize($icon));
     }
 }

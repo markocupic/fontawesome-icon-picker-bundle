@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+const initIconPicker = () => {
     const iconBoxId = 'iconBox';
     const iconBoxInnerId = 'iconBoxInner';
 
@@ -9,9 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let blockScroll = false;
 
-    if (!iconBox || !inputIcon || !inputFilter) {
+    // Do not initialize the picker twice (e.g. Turbo navigation in the Contao backend)
+    if (!iconBox || !inputIcon || !inputFilter || iconBox.dataset.iconPickerInitialized) {
         return;
     }
+
+    iconBox.dataset.iconPickerInitialized = 'true';
 
     // Scroll to the selected item
     (() => {
@@ -96,4 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
             inputIcon.value = JSON.stringify([faIconName, faIconStyle, faIconUnicode]);
         });
     });
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initIconPicker);
+} else {
+    initIconPicker();
+}
+
+// Contao 6 uses Turbo to navigate in the back end
+document.addEventListener('turbo:load', initIconPicker);
