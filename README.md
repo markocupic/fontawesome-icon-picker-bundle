@@ -4,6 +4,13 @@
 
 <img src="docs/images/backend.png" width="600">
 
+## Requirements
+
+- PHP 8.1 or higher (Contao 6 requires a more recent PHP version)
+- Contao 5.3 or Contao 6
+
+Contao 4.13 is no longer supported. Please use version 7.0.x of this extension for Contao 4.13.
+
 ## DCA
 
 Use the `fontawesomeIconPicker` input type to add the Font Awesome Icon Picker form widget to your tl_content table.

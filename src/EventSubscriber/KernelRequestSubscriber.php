@@ -25,11 +25,11 @@ class KernelRequestSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly Packages $packages,
         private readonly ScopeMatcher $scopeMatcher,
-        private string $fontawesomeSourcePath,
+        private readonly string $fontawesomeSourcePath,
     ) {
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [KernelEvents::REQUEST => 'onKernelRequest'];
     }

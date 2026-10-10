@@ -57,6 +57,6 @@ class Configuration implements ConfigurationInterface
 
     private function getFontawesomeDefaultVersion(): string
     {
-        return file_get_contents(Path::join(__DIR__, '../../fontawesome/.version'));
+        return trim((string) file_get_contents(Path::join(__DIR__, '../../fontawesome/.version')));
     }
 }

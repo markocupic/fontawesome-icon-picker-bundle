@@ -8,7 +8,7 @@
         "picker",
         "Font Awesome 5"
     ],
-    "type": "contao-module",
+    "type": "contao-bundle",
     "license": "LGPL-3.0+",
     "authors": [
         {
@@ -24,16 +24,32 @@
     },
     "require": {
         "php": "^8.1",
-        "contao/core-bundle": "^4.13 || ^5.0"
+        "contao/core-bundle": "^5.3 || ^6.0",
+        "doctrine/dbal": "^3.6 || ^4.0",
+        "symfony/asset": "^6.4 || ^7.0 || ^8.0",
+        "symfony/config": "^6.4 || ^7.0 || ^8.0",
+        "symfony/dependency-injection": "^6.4 || ^7.0 || ^8.0",
+        "symfony/event-dispatcher": "^6.4 || ^7.0 || ^8.0",
+        "symfony/filesystem": "^6.4 || ^7.0 || ^8.0",
+        "symfony/http-kernel": "^6.4 || ^7.0 || ^8.0",
+        "symfony/yaml": "^6.4 || ^7.0 || ^8.0",
+        "twig/twig": "^3.8"
     },
     "require-dev": {
-        "contao/manager-plugin": "^2.3",
-        "contao/easy-coding-standard": "6.0",
-        "phpstan/phpstan": "^1.0 || ^2.0"
+        "contao/manager-plugin": "^2.12",
+        "contao/test-case": "^5.3 || ^6.0"
+    },
+    "conflict": {
+        "contao/manager-plugin": "<2.0 || >=3.0"
     },
     "autoload": {
         "psr-4": {
             "Markocupic\\FontawesomeIconPickerBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Markocupic\\FontawesomeIconPickerBundle\\Tests\\": "tests/"
         }
     },
     "extra": {
@@ -41,14 +57,17 @@
     },
     "config": {
         "allow-plugins": {
-            "contao/manager-plugin": true,
-            "contao-components/installer": true,
-            "contao-community-alliance/composer-plugin": true
+            "contao-components/installer": false,
+            "contao/manager-plugin": false,
+            "php-http/discovery": false,
+            "contao-community-alliance/composer-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "scripts": {
-        "cs-fixer": "@php tools/ecs/vendor/bin/ecs check config/ contao/ src/ tests/ --config tools/ecs/config.php --fix --ansi",
+        "cs-fixer": "@php tools/ecs/vendor/bin/ecs check --config tools/ecs/config/default.php --fix --ansi",
+        "cs-check": "@php tools/ecs/vendor/bin/ecs check --config tools/ecs/config/default.php --ansi",
         "phpstan": "@php tools/phpstan/vendor/bin/phpstan analyse src tests",
-        "unit-tests": "@php tools/phpunit/vendor/bin/phpunit -c tools/phpunit/phpunit.xml.dist"
+        "unit-tests": "@php vendor/bin/phpunit --colors=always"
     }
 }

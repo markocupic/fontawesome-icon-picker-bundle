@@ -10,7 +10,8 @@ use Symplify\EasyCodingStandard\ValueObject\Option;
 return ECSConfig::configure()
 	->withSets([SetList::CONTAO])
 	->withPaths([
-		__DIR__ . '/../../src',
+		__DIR__ . '/../../../src',
+		__DIR__ . '/../../../tests',
 	])
 	->withSkip([
 		\Contao\EasyCodingStandard\Fixer\CommentLengthFixer::class          => ['*.php'],
